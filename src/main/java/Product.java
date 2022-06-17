@@ -25,6 +25,14 @@ public class Product {
         return (int) quantity;
     }
 
+    public String getItem() {
+        return item;
+    }
+
+    public void setItem(String item) {
+        this.item = item;
+    }
+
     @Override
     public String toString() {
         return " | " + item + " | " + price + " | " + quantity;

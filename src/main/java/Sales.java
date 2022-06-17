@@ -2,12 +2,10 @@ public class Sales {
     String item;
     float quantity;
     float totalAmount;
-    //float price;
 
     public Sales(String item, float quantity, float totalAmount) {
         this.item = item;
         this.quantity = quantity;
-        //this.price = getPrice();
         this.totalAmount = totalAmount;
     }
 
@@ -23,17 +21,17 @@ public class Sales {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(float quantity) {
         this.quantity = quantity;
     }
 
-//    public float getPrice() {
-//        return price;
-//    }
-//
-//    public void setPrice(float price) {
-//        this.price = price;
-//    }
+    public float getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(float totalAmount) {
+        this.totalAmount = totalAmount;
+    }
 
     @Override
     public String toString() {

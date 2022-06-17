@@ -2,27 +2,11 @@ public class Customer {
     String customerName;
     float wallet;
     float spending;
-//    String item;
-//    float quantity;
-
 
     public Customer(String customerName, float wallet, float spending) {
         this.customerName = customerName;
         this.wallet = wallet;
         this.spending = spending;
-    }
-
-//    public Customer(String customerName, float spending) {
-//        this.customerName = customerName;
-//        this.spending = spending;
-//    }
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
     }
 
     public float getWallet() {
