@@ -1,10 +1,9 @@
-import java.util.Scanner;
+import javax.swing.*;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        Scanner scanner = new Scanner(System.in);
         Shop shop = new Shop();
         shop.defaultCustomers();
         shop.defaultProducts();
@@ -13,19 +12,18 @@ public class Main {
         String menuChoice = "";
 
         while (!menuChoice.equals("0")) {
-            System.out.println("\nPlease choose an option below:");
-            System.out.println("""
+
+            menuChoice = JOptionPane.showInputDialog("""
+                    Please ENTER an option below:
                     1. add New Customer
                     2. add New Product
                     3. restock Product
                     4. show All Products
                     5. buy Product
                     6. show Sales
-                    7. show Customer Balance
+                    7. show All Customer list / Balance
                     0. QUIT
                     """);
-
-            menuChoice = scanner.nextLine();
 
             switch (menuChoice) {
                 case "1":

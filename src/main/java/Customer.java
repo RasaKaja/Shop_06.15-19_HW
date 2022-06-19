@@ -1,6 +1,6 @@
 public class Customer {
-    String customerName;
-    float wallet;
+    private final String customerName;
+    private float wallet;
     float spending;
 
     public Customer(String customerName, float wallet, float spending) {
@@ -23,6 +23,10 @@ public class Customer {
 
     public float getSpending() {
         return spending;
+    }
+
+    public String getCustomerName() {
+        return customerName;
     }
 
     @Override

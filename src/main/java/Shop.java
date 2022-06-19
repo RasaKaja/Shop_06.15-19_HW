@@ -1,54 +1,51 @@
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Shop {
     Scanner scanner = new Scanner(System.in);
     Scanner scannerF = new Scanner(System.in);
-    Scanner scannerF2 = new Scanner(System.in);
     Scanner scannerInt = new Scanner(System.in);
-    Scanner scannerInt2 = new Scanner(System.in);
     ArrayList<Product> products = new ArrayList<>();
     ArrayList<Sales> sales = new ArrayList<>();
     ArrayList<Customer> customers = new ArrayList<>();
 
     void addProduct(Product product){
-        products.add(product);
+        this.products.add(product);
     }
 
     ArrayList<Product> allProducts() {
-        return products;
+        return this.products;
     }
 
     void addSales(Sales sale){
-        sales.add(sale);
+        this.sales.add(sale);
     }
 
     ArrayList<Sales> allSales(){
-        return sales;
+        return this.sales;
     }
 
     void addDefaultCustomer(Customer customer){
-        customers.add(customer);
+        this.customers.add(customer);
     }
 
     void addCustomer(){
-        System.out.print("Welcome to our SHOP. What is your name: ");
-        String customerName = scanner.nextLine();
+        String customerName = JOptionPane.showInputDialog("Welcome to our SHOP. What is your name: ");
+        Float wallet = Float.parseFloat((String) JOptionPane.showInputDialog("Dear " + customerName + ", \nwhat amount Eur per Month You are planning to spend: "));
 
-        System.out.print("What amount per Month You planning to spend: ");
-        float wallet = Float.parseFloat(scannerF.nextLine());
-
-        float spending = 0f;
+        Float spending = 0f;
 
         Customer info = new Customer(customerName, wallet, spending);
-        customers.add(info);
+        this.customers.add(info);
+        int newCustomerNo = customers.indexOf(info);
 
-        //welcomeMessage(customerName);
+        welcomeMessage(newCustomerNo);
     }
 
-    private void welcomeMessage(String customerName) {
-        int membershipNo = customers.indexOf(customerName);
-        System.out.println(customerName + "  - we are happy that you joint us. Your Membership NO is -> " + membershipNo);
+    public void welcomeMessage(int newCustomerNo) {
+        String customerName = customers.get(newCustomerNo).getCustomerName();
+        JOptionPane.showMessageDialog(null,customerName + " - we are happy that you joint us. Your Membership NO is --> " + (newCustomerNo+1));
     }
 
     ArrayList<Customer> allCustomers(){
@@ -58,15 +55,16 @@ public class Shop {
     void listOfAllCustomers(){
         System.out.println("\nCustomers balance: ");
         System.out.println("No | Name | Wallet | Spending");
-        for (Customer customer: allCustomers()){
-            System.out.println((customers.indexOf(customer)+1) +""+ customer);
+        for (Customer customer : allCustomers()) {
+                System.out.println((customers.indexOf(customer)+1) +""+ customer);
+                //JOptionPane.showMessageDialog(null, (customers.indexOf(customer) + 1) + "" + customer);
         }
     }
 
     void defaultCustomers(){
-        Customer rasa = new Customer("Rasa", 10, 0);
-        Customer jonas = new Customer("Jonas", 500, 0);
-        Customer ana = new Customer("Ana", 300, 0);
+        Customer rasa = new Customer("Rasa", 100, 0);
+        Customer jonas = new Customer("Jonas", 200, 0);
+        Customer ana = new Customer("Ana", 150, 0);
 
         addDefaultCustomer(rasa);
         addDefaultCustomer(jonas);
@@ -74,12 +72,12 @@ public class Shop {
     }
 
     void defaultProducts(){
-        Product milk = new Product("milk", 2.5f, 20);
-        Product apple = new Product("apple", 1.5f, 5);
-        Product sugar = new Product("sugar", 3.15f, 10);
-        Product butter = new Product("butter", 1.15f, 15);
-        Product cheese = new Product("cheese", 14.99f, 50);
-        Product beef = new Product("beef", 17.99f, 50);
+        Product milk = new Product("milk", 2.5f, 20, "liter");
+        Product apple = new Product("apple", 1.5f, 5, "kg");
+        Product sugar = new Product("sugar", 3.15f, 10, "kg");
+        Product butter = new Product("butter", 1.15f, 15, "unit");
+        Product cheese = new Product("cheese", 14.99f, 50, "kg");
+        Product beef = new Product("beef", 17.99f, 50, "kg");
         addProduct(milk);
         addProduct(apple);
         addProduct(sugar);
@@ -89,33 +87,71 @@ public class Shop {
     }
 
     void addNewProduct(){
-        System.out.println("Entering NEW product to the shop.");
-        System.out.print("NEW product is: ");
-        String type = scanner.nextLine();
 
-        System.out.print(type + " unit price is: ");
-        float price = Float.parseFloat(scannerF.nextLine());
+        String item = (String) JOptionPane.showInputDialog(null,
+                "Enter NEW product:",
+                "New product",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                null,
+                null
+        );
 
-        System.out.print("and TOTAL quantity: ");
-        float quantity = scannerF.nextInt();
+        Float price = Float.parseFloat((String) JOptionPane.showInputDialog(null,
+                "Enter the price of " + item,
+                "Price setter",
+                JOptionPane.QUESTION_MESSAGE,
+                null, null, null
+        ));
 
-        Product product = new Product(type, price, quantity);
+        String[] availableMeasurements = {"kg", "liter", "unit"};
+        String measurement = (String) JOptionPane.showInputDialog(null,
+                "Select Product measurement",
+                "Measurement setter",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                availableMeasurements,
+                availableMeasurements[2]
+        );
+
+        Float quantity = Float.parseFloat((String) JOptionPane.showInputDialog(null,
+                "enter quantity of " + item,
+                "Quantity setter",
+                JOptionPane.QUESTION_MESSAGE,
+                null, null,null
+        ));
+
+        Product product = new Product(item, price, quantity, measurement);
         addProduct(product);
 
         System.out.println(product.item + " added successfully.");
     }
 
     Product productAtIndex(int no){
-        return products.get((no-1));
+        return this.products.get(no);
     }
 
     Customer customerAtIndex(int customerNo){
-        return customers.get((customerNo-1));
+        return this.customers.get(customerNo);
     }
 
-//    Sales salesAtIndex(int num){
-//        return sales.get((num-1));
-//    }
+    Integer indexByCustomerName (String name) {
+        for (Customer customer : customers){
+            if (name.equals(customer.getCustomerName())){
+                return customers.indexOf(customer);
+            }
+        }
+        return null;
+    }
+
+    Integer indexByProduct (String name) {
+        for (Product product : products){
+            if (name.equals(product.getItem())){
+                return products.indexOf(product);
+            }
+        }
+        return null;
+    }
 
     void restockProduct(){
         System.out.print("\nChoose the index of Product you want to restock: ");
@@ -144,35 +180,61 @@ public class Shop {
         System.out.println(productAtIndex(no));
     }
 
+    String[] listOfNames(){
+        int howManyNames = allCustomers().size();
+        String[] listOfNames = new String[howManyNames];
+        for (int i = 0; i < howManyNames; i++){
+            listOfNames[i] = allCustomers().get(i).getCustomerName();;
+        }
+        return listOfNames;
+    }
+
+    String[] namesOfProducts(){
+        int howManyProducts = allProducts().size();
+        String[] namesOfProducts = new String[howManyProducts];
+        for (int i = 0; i < howManyProducts; i++){
+            namesOfProducts[i] = allProducts().get(i).getItem();;
+        }
+        return namesOfProducts;
+    }
+
     void buyProduct(){
-        System.out.print("\nEnter please your No: ");
-        int customerNo = scannerInt.nextInt();
 
-        System.out.print("Input product ID you want to buy: ");
-        int productNum = scannerInt2.nextInt();
+        String member = (String) JOptionPane.showInputDialog(null,
+                "Please show your Memebership card (choose your name)",
+                "Recognising the Shop Member",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                listOfNames(),
+                listOfNames()[0]
+        );
+       int customerNo = indexByCustomerName(member);
 
-        System.out.print("Input quantity: ");
-        float buyQuantity = Float.parseFloat(scannerF2.nextLine());
+        String  productName = (String) JOptionPane.showInputDialog(null,
+                "Choose Product",
+                "Purchase",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                namesOfProducts(),
+                namesOfProducts()[0]
+        );
+        int productNum = indexByProduct(productName);
 
-        float amount = productAtIndex(productNum).price * buyQuantity;
+        Float buyQuantity = Float.parseFloat(JOptionPane.showInputDialog("Input quantity:"));
+
+        float amount = productAtIndex(productNum).getPrice() * buyQuantity;
 
         if ((buyQuantity <= productAtIndex(productNum).getQuantity()) && amount <= customerAtIndex(customerNo).getWallet()) {
 
-            System.out.println(buyQuantity + " " + productAtIndex(productNum).item + " will cost you: " + amount + " Eur.");
+            System.out.println(buyQuantity + " " + productAtIndex(productNum).getMeasurement() +" " + productAtIndex(productNum).getItem() + " will cost you: " + amount + " Eur.");
 
             // changing product quantity in Product ArrayList
             float quantityChange = productAtIndex(productNum).getQuantity() - buyQuantity;
             productAtIndex(productNum).setQuantity(quantityChange);
 
             // adding sale to Sales ArrayList
-            Sales sale = new Sales(productAtIndex(productNum).item, buyQuantity, amount);
-            addSales(sale);
-
-            //String itemChange = salesAtIndex(productNum).getItem();
-            //salesAtIndex(productNum).setItem(itemChange);
-            //salesAtIndex(productNum).getItem();
-//        salesAtIndex(productNum).setQuantity(quantityChange);
-//        salesAtIndex(productNum).setTotalAmount(amount);
+            Sales sale = new Sales(productAtIndex(productNum).getItem(), buyQuantity, amount);
+            this.addSales(sale);
 
             // changing customer balance
             float walletChange = customerAtIndex(customerNo).getWallet() - amount;
@@ -189,7 +251,7 @@ public class Shop {
 
     void listOfProducts(){
         System.out.println("\nIn the shop we have: ");
-        System.out.println("ID | Product | Price | Qty");
+        System.out.println("ID | Product | Price per Unit | Qty");
         for (Product product : allProducts()) {
             System.out.println((products.indexOf(product)+1) + "" + product);
         }
@@ -206,5 +268,4 @@ public class Shop {
         }
         System.out.println("TOTAL Sales amount " + totalSales + " Eur.");
     }
-
 }

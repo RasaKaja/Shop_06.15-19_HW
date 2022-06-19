@@ -1,20 +1,18 @@
 public class Product {
-    String item;
+    final String item;
     float quantity;
     float price;
+    final String measurement;
 
-    public Product(String item, float price, float quantity){
+    public Product(String item, float price, float quantity, String measurement){
         this.item = item;
         this.price = price;
         this.quantity = quantity;
+        this.measurement = measurement;
     }
 
     public void setPrice(float price) {
         this.price = price;
-    }
-
-    public float getPrice() {
-        return price;
     }
 
     public void setQuantity(float quantity) {
@@ -29,15 +27,17 @@ public class Product {
         return item;
     }
 
-    public void setItem(String item) {
-        this.item = item;
+    public String getMeasurement() {
+        return measurement;
+    }
+
+    public float getPrice() {
+        return price;
     }
 
     @Override
     public String toString() {
-        return " | " + item + " | " + price + " | " + quantity;
+        return " | " + item + " | " + price + " per " + measurement + " | " + quantity;
     }
-
-
 
 }
