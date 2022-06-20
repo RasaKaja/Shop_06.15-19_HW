@@ -31,6 +31,7 @@ public class Customer {
 
     @Override
     public String toString() {
-        return " | " + customerName + " | " + getWallet() + " | " + spending;
+        //return String.format(" | " + customerName + " | " + getWallet() + " | " + spending);
+        return String.format(" | %10s |%6.2f|%-3.2f", customerName, getWallet(), spending);
     }
 }

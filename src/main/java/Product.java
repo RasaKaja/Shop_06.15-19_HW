@@ -37,7 +37,8 @@ public class Product {
 
     @Override
     public String toString() {
-        return " | " + item + " | " + price + " per " + measurement + " | " + quantity;
+        return String.format(" | %10s | %3.2f/%3s | %3.2f", item, price, measurement, quantity);
     }
 
 }
+//String.format(" | %10s | %3.2f | %3.2f", customerName, getWallet(), spending);

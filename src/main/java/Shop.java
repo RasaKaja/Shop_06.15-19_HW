@@ -54,7 +54,8 @@ public class Shop {
 
     void listOfAllCustomers(){
         System.out.println("\nCustomers balance: ");
-        System.out.println("No | Name | Wallet | Spending");
+        System.out.println("No|    Name    | Wallet | Spending");
+        System.out.println("------------------------------------");
         for (Customer customer : allCustomers()) {
                 System.out.println((customers.indexOf(customer)+1) +""+ customer);
                 //JOptionPane.showMessageDialog(null, (customers.indexOf(customer) + 1) + "" + customer);
@@ -104,7 +105,7 @@ public class Shop {
                 null, null, null
         ));
 
-        String[] availableMeasurements = {"kg", "liter", "unit"};
+        String[] availableMeasurements = {"kg", "ltr", "unt"};
         String measurement = (String) JOptionPane.showInputDialog(null,
                 "Select Product measurement",
                 "Measurement setter",
@@ -226,7 +227,7 @@ public class Shop {
 
         if ((buyQuantity <= productAtIndex(productNum).getQuantity()) && amount <= customerAtIndex(customerNo).getWallet()) {
 
-            System.out.println(buyQuantity + " " + productAtIndex(productNum).getMeasurement() +" " + productAtIndex(productNum).getItem() + " will cost you: " + amount + " Eur.");
+            System.out.printf(buyQuantity + " " + productAtIndex(productNum).getMeasurement() +" " + productAtIndex(productNum).getItem() + " will cost for " + member + " %3.2f Eur.%n", amount);
 
             // changing product quantity in Product ArrayList
             float quantityChange = productAtIndex(productNum).getQuantity() - buyQuantity;
@@ -251,7 +252,8 @@ public class Shop {
 
     void listOfProducts(){
         System.out.println("\nIn the shop we have: ");
-        System.out.println("ID | Product | Price per Unit | Qty");
+        System.out.println("ID|  Product   | Price/Unit | Qty");
+        System.out.println("------------------------------------");
         for (Product product : allProducts()) {
             System.out.println((products.indexOf(product)+1) + "" + product);
         }
@@ -260,12 +262,14 @@ public class Shop {
     void listOfSales(){
         float totalSales = 0;
         System.out.println("\nLook at the sales:");
-        System.out.println("Item | Sold qty: | Total, eur");
+        System.out.println("    Item    |Sold qty:| Total, eur");
+        System.out.println("------------------------------------");
         for (Sales sale : allSales()) {
                 System.out.println(sale);
                 int index = sales.indexOf(sale);
                 totalSales += sales.get(index).getTotalAmount();
         }
-        System.out.println("TOTAL Sales amount " + totalSales + " Eur.");
+        System.out.println("------------------------------------");
+        System.out.printf("TOTAL Sales amount %3.2f Eur.%n", totalSales);
     }
 }

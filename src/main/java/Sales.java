@@ -31,6 +31,6 @@ public class Sales {
 
     @Override
     public String toString() {
-        return item + " | " + quantity + " | " + totalAmount;
+        return String.format(" %10s |%9.2f| %3.2f", item, quantity,totalAmount);
     }
 }
